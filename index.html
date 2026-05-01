@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+<title>2026/5/30 婚禮流程</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    background: #f6f1ff;
+    color: #2d1b4e;
+    line-height: 1.55;
+    padding-bottom: 60px;
+    font-size: 15px;
+  }
+  .header {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(135deg, #6b4d9a 0%, #8b6bc4 100%);
+    color: white;
+    padding: 12px 14px 14px;
+    box-shadow: 0 2px 10px rgba(45,27,78,0.18);
+    z-index: 100;
+  }
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  .title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .title .ko-block { font-size: 12px; font-weight: 400; opacity: 0.85; }
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    user-select: none;
+    background: rgba(255,255,255,0.18);
+    padding: 6px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .lang-toggle input {
+    width: 15px; height: 15px;
+    accent-color: #ffd700;
+    cursor: pointer;
+  }
+  .filter-row {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    position: relative;
+  }
+  .filter-label {
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0.95;
+  }
+
+  /* 多選下拉 */
+  .multi-select {
+    flex: 1;
+    position: relative;
+  }
+  .ms-trigger {
+    background: white;
+    color: #2d1b4e;
+    padding: 8px 32px 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    position: relative;
+  }
+  .ms-trigger::after {
+    content: "▼";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: #6b4d9a;
+    transition: transform 0.2s;
+  }
+  .multi-select.open .ms-trigger::after {
+    transform: translateY(-50%) rotate(180deg);
+  }
+  .ms-placeholder {
+    color: #888;
+    font-weight: 400;
+  }
+  .ms-chip {
+    background: #efe6fa;
+    color: #5a3d8a;
+    padding: 2px 6px 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .ms-chip-x {
+    cursor: pointer;
+    color: #6b4d9a;
+    font-weight: 700;
+    padding: 0 3px;
+    font-size: 13px;
+    line-height: 1;
+  }
+  .ms-chip-x:hover { color: #d4a017; }
+  .ms-clear {
+    margin-left: auto;
+    font-size: 11px;
+    color: #888;
+    background: #f0e8fa;
+    padding: 2px 7px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .ms-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(45,27,78,0.25);
+    max-height: 320px;
+    overflow-y: auto;
+    z-index: 200;
+    padding: 6px;
+  }
+  .multi-select.open .ms-dropdown { display: block; }
+  .ms-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #2d1b4e;
+    user-select: none;
+  }
+  .ms-option:hover { background: #f6f1ff; }
+  .ms-option input {
+    width: 16px;
+    height: 16px;
+    accent-color: #8b6bc4;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .ms-option .ko-tag { color: #888; font-size: 12px; }
+
+  .container {
+    padding: 14px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .stats {
+    text-align: center;
+    color: #6b4d9a;
+    font-size: 12px;
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+
+  /* 時間軸佈局 */
+  .event-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 11px;
+    align-items: flex-start;
+  }
+  .event-time-col {
+    flex: 0 0 64px;
+    padding-top: 14px;
+    text-align: right;
+    color: #6b4d9a;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.25;
+    letter-spacing: 0.3px;
+    word-break: keep-all;
+  }
+  .event-time-col .time-range {
+    font-size: 11.5px;
+    line-height: 1.3;
+    display: block;
+  }
+  .event-card {
+    flex: 1;
+    min-width: 0;
+    background: white;
+    border-radius: 14px;
+    padding: 14px 14px 12px;
+    box-shadow: 0 1px 4px rgba(45,27,78,0.07);
+    border-left: 4px solid #8b6bc4;
+  }
+  .event-card.highlighted {
+    border-left-color: #d4a017;
+    background: linear-gradient(to right, #fff8e1 0%, white 30%);
+    box-shadow: 0 2px 8px rgba(212,160,23,0.18);
+  }
+  .event-activity {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2d1b4e;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .event-activity .ko-block {
+    font-weight: 500;
+    font-size: 13px;
+    color: #7a6da3;
+    margin-top: 2px;
+  }
+  .field { margin-top: 9px; font-size: 13.5px; }
+  .field-label {
+    display: inline-block;
+    font-weight: 700;
+    color: #6b4d9a;
+    margin-right: 4px;
+    font-size: 12px;
+    background: #efe6fa;
+    padding: 2px 7px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+  }
+  .field-label .ko { font-weight: 500; }
+  .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
+
+  /* 人員 tag - 預設黃色（道具同色系），選到時變強調色 */
+  .person-tag {
+    display: inline-block;
+    background: #fff3e0;
+    color: #a65d0c;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+  .person-tag.highlight {
+    background: #d4a017;
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(212,160,23,0.4);
+  }
+  .person-tag .ko { color: #c08854; font-size: 0.92em; }
+  .person-tag.highlight .ko { color: white; opacity: 0.92; }
+
+  /* 道具 tag - 跟人員同色系，但稍微區隔 */
+  .item-tag {
+    display: inline-block;
+    background: #fef0d6;
+    color: #8a4d0c;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 12.5px;
+    border: 1px dashed #e8b876;
+  }
+  .item-tag .ko { color: #b07a3a; font-size: 0.9em; }
+
+  .content-list {
+    margin-top: 4px;
+    padding-left: 4px;
+  }
+  .content-item {
+    font-size: 13.5px;
+    color: #3a2a5a;
+    margin: 4px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .content-item::before {
+    content: "•";
+    color: #8b6bc4;
+    position: absolute;
+    left: 4px;
+    font-weight: 700;
+  }
+  .content-item .ko-block {
+    color: #8a7aa8;
+    font-size: 12.5px;
+    margin-top: 1px;
+  }
+
+  /* 韓文預設隱藏 */
+  .ko, .ko-block { display: none; }
+  body.show-ko .ko { display: inline; }
+  body.show-ko .ko-block { display: block; }
+
+  .empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #888;
+    font-size: 14px;
+  }
+  .empty-state .icon { font-size: 40px; margin-bottom: 12px; opacity: 0.5; }
+
+  .back-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    background: #6b4d9a;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 3px 12px rgba(45,27,78,0.3);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    z-index: 99;
+  }
+  .back-top.visible { opacity: 1; pointer-events: auto; }
+
+  @media (max-width: 480px) {
+    .title { font-size: 15px; }
+    .event-activity { font-size: 15px; }
+    .filter-label { font-size: 12px; }
+    .event-time-col { flex: 0 0 56px; font-size: 13px; }
+    .event-time-col .time-range { font-size: 10.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-row">
+    <div class="title">
+      📅 2026/5/30 婚禮流程
+      <span class="ko-block">2026/5/30 결혼식 일정</span>
+    </div>
+    <label class="lang-toggle">
+      <input type="checkbox" id="koToggle">
+      <span>한국어</span>
+    </label>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">👤 篩選人員<span class="ko">／담당자</span></span>
+    <div class="multi-select" id="multiSelect">
+      <div class="ms-trigger" id="msTrigger">
+        <span class="ms-placeholder">全部顯示<span class="ko">／전체 표시</span></span>
+      </div>
+      <div class="ms-dropdown" id="msDropdown"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="stats" id="stats"></div>
+  <div id="eventsContainer"></div>
+</div>
+
+<div class="back-top" id="backTop" title="回到頂端">↑</div>
+
+<script>
+// ============ 人員對照表 (zh -> ko) ============
+const PEOPLE = {
+  "新秘": "메이크업 쌤",
+  "哥": "오빠",
+  "弟": "동생",
+  "婚攝": "촬영감독",
+  "蕭": "루루",
+  "雯": "이문",
+  "菲": "에릭",
+  "妞": "뇨",
+  "熊": "숑",
+  "新郎": "신랑",
+  "新娘": "신부",
+  "爸": "아빠",
+  "媽": "엄마",
+  "Linda": "Linda",
+  "萊爾": "라일",
+  "偷筆": "토비",
+  "小幫手": "도우미",
+  "主桌小姐": "메인 테이블 도우미",
+  "彭園音控.燈控": "음향·조명 감독"
+};
+
+// ============ 婚禮流程資料 ============
+const EVENTS = [
+  { time: "04:30", activity: { zh: "新娘家中開妝・付尾款", ko: "신부 집에서 메이크업 시작 · 잔금 지불" },
+    items: [{ zh: "哥房間", ko: "오빠 방" }],
+    people: ["新秘"],
+    content: [
+      { zh: "讓狗安靜", ko: "강아지 진정시키기" },
+      { zh: "整理哥房間、去除不必要裝飾及物品", ko: "오빠 방 정리, 불필요한 장식과 물건 제거" }
+    ]},
+  { time: "06:30", activity: { zh: "布置新娘家", ko: "신부 집 꾸미기" },
+    items: [
+      { zh: "氣球", ko: "풍선" },
+      { zh: "照片", ko: "사진" },
+      { zh: "窗簾", ko: "커튼" },
+      { zh: "床頭櫃紗巾", ko: "침대 옆 테이블 망사" }
+    ],
+    people: ["哥", "弟"],
+    content: [{ zh: "桌子、狗籠移開，擺椅子", ko: "테이블·강아지 케이지 치우고, 의자 배치" }]},
+  { time: "07:30", activity: { zh: "婚攝到新娘家・付尾款", ko: "촬영감독 신부 집 도착 · 잔금 지불" },
+    items: [],
+    people: ["婚攝", "弟"],
+    content: [
+      { zh: "讓狗安靜", ko: "강아지 진정시키기" },
+      { zh: "引導攝影師上樓、下樓抓新郎禮車抵達角度", ko: "촬영감독을 4층으로 안내, 1층에서 신랑 웨딩카 도착 각도 잡기" }
+    ]},
+  { time: "07:30", activity: { zh: "禮車x1到新娘家", ko: "웨딩카 1대 신부 집 도착" },
+    items: [
+      { zh: "禮車一台", ko: "웨딩카 1대" },
+      { zh: "門把緞帶", ko: "손잡이 리본" }
+    ],
+    people: ["蕭", "弟"],
+    content: [
+      { zh: "停車後先上樓，再跟攝影師&弟一起下樓等待", ko: "주차 후 먼저 4층으로, 그 다음 촬영감독·동생과 함께 1층에서 대기" },
+      { zh: "幫忙錄影，一起放鞭炮", ko: “녹화 보조, 함께 폭죽 터뜨리기" }
+    ]},
+  { time: "07:45", activity: { zh: "禮車x2到飯店接新郎", ko: "웨딩카 2대 호텔에서 신랑 픽업" },
+    items: [
+      { zh: "禮車兩台", ko: "웨딩카 2대" },
+      { zh: "車頭綵帶+門把緞帶", ko: "차 앞 리본 + 손잡이 리본" }
+    ],
+    people: ["雯", "菲", "妞", "熊", "新郎"],
+    content: [
+      { zh: "確認新郎有帶新娘捧花", ko: "신랑이 신부 부케를 챙겼는지 확인" },
+      { zh: "確認新郎有洗臉", ko: "신랑이 세수했는지 확인" }
+    ]},
+  { time: "08:00", activity: { zh: "禮車x2抵達新娘家", ko: "웨딩카x2 신부 집 도착" },
+    items: [{ zh: "鞭炮", ko: "폭죽" }],
+    people: ["婚攝", "弟", "雯", "菲", "妞", "熊", "蕭", "新郎"],
+    content: [
+      { zh: "抵達巷口時放鞭炮（弟）", ko: "골목 입구 도착 시 폭죽 터뜨리기 (동생)" },
+      { zh: "幫忙錄影（蕭）", ko: "녹화 보조 (루루)" },
+      { zh: "引導新郎緩慢下車拍照（雯妞）", ko: "신랑 천천히 하차하여 촬영 안내 (이문·뇨)" },
+      { zh: "引導禮車停車+停好如何上樓（蕭）", ko: "웨딩카 주차 안내 + 4층 동선 안내 (루루)" },
+      { zh: ">>> 新郎+4位親友團要一起上樓", ko: ">>> 신랑 + 친구 4명 함께 4층으로" }
+    ]},
+  { time: "08:10", activity: { zh: "新郎到樓上，打招呼，進房間給新娘捧花", ko: "신랑 4층 도착, 인사, 방에 들어가 신부에게 부케 전달" },
+    items: [{ zh: "捧花", ko: "부케" }],
+    people: ["雯", "菲", "妞", "熊", "蕭", "新郎"],
+    content: [{ zh: "引導新郎路線與要做的事", ko: "신랑 동선과 할 일 안내" }]},
+  { time: "08:15-08:45", activity: { zh: "親友喝茶聊天吃早餐", ko: "가족.친구들 차 마시며 수달·간단한 아침밥" },
+    items: [
+      { zh: "早餐", ko: "아침밥" },
+      { zh: "簡單茶水點心", ko: "간단한 다과" },
+      { zh: "囍字紙杯", ko: "종이컵" },
+      { zh: "6盒喜餅+大餅", ko: "양식+중식 답례품 6박스" }
+    ],
+    people: ["哥", "爸", "媽"],
+    content: []},
+  { time: "08:15-08:45", activity: { zh: "給朋友喜餅&證件", ko: "친구들에게 답례품 & 신분증 전달" },
+    items: [
+      { zh: "3盒喜餅+大餅", ko: "양식+중식 답례품 3박스" },
+      { zh: "新娘證件", ko: "신부 신분증" }
+    ],
+    people: ["雯", "菲", "妞", "熊", "蕭"],
+    content: [
+      { zh: "喜餅稍後可先放車上", ko: "답례품은 잠시 후 차에 둘 수 있음" },
+      { zh: "證件給妞，到會館3F換新娘休息室鑰匙", ko: "신분증은 뇨에게, 예식장 3층에서 신부 대기실 열쇠로 교환" }
+    ]},
+  { time: "08:15-08:45", activity: { zh: "拍照時間1（房內）", ko: "사진 촬영 시간 1 (방 안)" },
+    items: [],
+    people: ["婚攝", "雯", "菲", "妞", "熊", "蕭", "新郎"],
+    content: [
+      { zh: "要請攝影師拍的照片：", ko: "촬영감독에게 부탁할 사진:" },
+      { zh: "新郎+新娘", ko: "신랑 + 신부" },
+      { zh: "新娘+朋友", ko: "신부 + 친구들" },
+      { zh: "新郎新娘朋友", ko: "신랑·신부 + 친구들" }
+    ]},
+  { time: "08:15-08:45", activity: { zh: "拍照時間2（客廳）", ko: "사진 촬영 시간 2 (거실)" },
+    items: [{ zh: "椅子", ko: "의자" }],
+    people: ["婚攝", "雯", "菲", "妞", "熊", "蕭", "新郎"],
+    content: [
+      { zh: "1. 要請攝影師拍的照片：", ko: "1. 촬영감독에게 부탁할 사진:" },
+      { zh: "6人全家福", ko: "가족 6인 단체사진" },
+      { zh: "6人全家福+狗", ko: "가족 6인 + 강아지 사진" },
+      { zh: "新郎+新娘+爸媽", ko: "신랑 + 신부 + 부모님" },
+      { zh: "新娘+爸媽", ko:  신부 + 부모님" },
+      { zh: "新娘+狗", ko: "신부 + 강아지" },
+      { zh: "新郎+新娘+狗", ko: "신랑 + 신부 + 강아지" },
+      { zh: "現場觀禮親友全體合照", ko: "현장 가족.친구 전체 단체사진" },
+      { zh: "2. 請朋友幫忙錄影", ko: "2. 친구에게 녹화 부탁" }
+    ]},
+  { time: "08:45", activity: { zh: "稟告祖先", ko: "조상님께 고하기" },
+    items: [],
+    people: ["爸", "媽", "新娘", "新郎", "哥"],
+    content: [{ zh: "哥裝狗+準備推車與外出用品", ko: "오빠가 강아지 챙기기 + 유모차와 외출용품 준비" }]},
+  { time: "08:45", activity: { zh: "下樓取車準備", ko: "주차장으로 내려가 차 준비" },
+    items: [
+      { zh: "禮車三台", ko: "웨딩카 3대" },
+      { zh: "狗推車", ko: "강아지 유모차" },
+      { zh: "尿布", ko: "기저귀" },
+      { zh: "零食", ko: "간식" },
+      { zh: "水碗", ko: "물그릇" }
+    ],
+    people: ["蕭", "菲", "熊"],
+    content: [
+      { zh: "1. 提前下樓去停車場取車，抓時間9:10開到一樓等", ko: "1. 미리 주차장 가서 차 가져오기, 9:10에 1층 도착해 대기" },
+      { zh: "2. 先帶推車&外出包&狗上車", ko: "2. 유모차·외출 가방·강아지 먼저 차에 실기" }
+    ]},
+  { time: "08:50", activity: { zh: "拜別父母", ko: "부모님께 하직 인사 " },
+    items: [
+      { zh: "衛生紙", ko: "휴지" },
+      { zh: "拜別軟墊", ko: "절하는 방석" }
+    ],
+    people: ["爸", "媽", "新娘", "新郎", "雯"],
+    content: [{ zh: "簡單翻譯（特別需要新郎知道或警告的部分）", ko: "간단한 통역 (신랑에게 특별히 경고 부분등)" }]},
+  { time: "09:00", activity: { zh: "蓋頭紗", ko: "베일 씌우기" },
+    items: [],
+    people: ["爸", "媽"],
+    content: []},
+  { time: "09:10", activity: { zh: "極度緩慢下樓", ko: "아주 천천히 내려가기" },
+    items: [{ zh: "米篩", ko: "쌀 체" }],
+    people: ["雯", "妞"],
+    content: [
+      { zh: "雯雯拿米篩", ko: "이문이 쌀 체 들기" },
+      { zh: "妞拉裙襬", ko: "뇨가 드레스 자락 들어주기" }
+    ]},
+  { time: "09:20", activity: { zh: "上禮車", ko: "웨딩카 탑승" },
+    items: [{ zh: "禮車x3", ko: "웨딩카 3대" }],
+    people: ["雯", "菲", "妞", "熊", "蕭"],
+    content: [
+      { zh: "順序：", ko: "순서:" },
+      { zh: "第一台：蕭 － 載狗+弟", ko: "1번째: 루루 - 강아지 + 동생" },
+      { zh: "第二台：雯菲 － 載新郎新娘", ko: "2번째: 이문·에릭 - 신랑·신부" },
+      { zh: "第三台：妞熊 － 載新秘+婚攝", ko: "3번째: 뇨·숑 - 메이크업 쌤 + 촬영감독" }
+    ]},
+  { time: "09:25", activity: { zh: "爸爸給扇子・丟扇子", ko: "아빠가 부채 주기 · 부채 던지기" },
+    items: [{ zh: "扇子", ko: "부채" }],
+    people: ["爸"],
+    content: [{ zh: "第1&2台緩慢前進，讓攝影師拍照", ko: "1·2번째 차 천천히 전진하여 촬영감독이 촬영할 수 있도록" }]},
+  { time: "09:30", activity: { zh: "一樓放鞭炮・環境清潔", ko: "1층 폭죽 터뜨리기 · 환경 정리" },
+    items: [{ zh: "鞭炮", ko: "폭죽" }],
+    people: ["哥"],
+    content: [{ zh: "婚攝拍完再上第3台車出發", ko: "촬영감독 촬영 완료 후 3번째 차 탑승해 출발" }]},
+  { time: "09:45", activity: { zh: "第1&3台禮車先抵達彭園", ko: "1·3번 웨딩카 예식장 먼저 도착" },
+    items: [],
+    people: ["妞", "熊", "蕭"],
+    content: [{ zh: "大門口先放人+狗下車，停車後開車者再到一樓大門會合（停車場無電梯上樓，需先下車）", ko: "정문에서 사람·강아지 먼저 하차, 주차 후 운전자는 1층 정문에서 합류 (주차장에 엘리베이터 없음, 먼저 내려야 함)" }]},
+  { time: "09:55", activity: { zh: "第2台禮車緩慢抵達彭園", ko: "2번 웨딩카 천천히 예식장 도착" },
+    items: [{ zh: "鞭炮", ko: "폭죽" }],
+    people: ["雯", "菲", "妞", "熊", "蕭", "婚攝"],
+    content: [
+      { zh: "熊看到禮車抵達時放鞭炮，提醒攝影師", ko: "숑이 웨딩카 도착을 보고 폭죽 터뜨리며 촬영감독에게 알림" },
+      { zh: "蕭協助錄影", ko: "루루 녹화 보조" },
+      { zh: "弟顧狗&推車", ko: "동생 강아지 & 유모차 담당" },
+      { zh: "新娘下車，雯妞協助拉裙擺", ko: "신부 하차, 이문·뇨가 드레스 자락 도와주기" },
+      { zh: "菲停車後直接上4樓新娘休息室", ko: "에릭 주차 후 바로 4층 신부 대기실로" }
+    ]},
+  { time: "10:00", activity: { zh: "上樓到新娘休息室", ko: "신부 대기실로 올라가기" },
+    items: [{ zh: "新娘休息室鑰匙", ko: "신부 대기실 열쇠" }],
+    people: ["妞", "Linda"],
+    content: [{ zh: "到3樓辦公室用新娘證件換", ko: "3층 사무실에서 신부 신분증으로 교환" }]},
+  { time: "10:10", activity: { zh: "新郎化妝", ko: "신랑 메이크업" },
+    items: [],
+    people: ["新郎", "新秘"],
+    content: []},
+  { time: "10:10", activity: { zh: "休息時間", ko: "휴식 시간" },
+    items: [],
+    people: [],
+    content: [
+      { zh: "新娘&朋友吃東西+補妝", ko: "신부 & 친구들 식사 + 화장 수정" },
+      { zh: "弟顧狗", ko: "동생 강아지 담당" }
+    ]},
+  { time: "10:30", activity: { zh: "訂工作人員餐點", ko: "스태프 식사 주문" },
+    items: [
+      { zh: "彭園代訂便當 $200/人", ko: "예식장 도시락 대리 주문 $200/인" },
+      { zh: "或訂pizza個人餐 + 手搖", ko: "또는 피자 1인 세트 + 음료" }
+    ],
+    people: ["弟"],
+    content: [
+      { zh: "確認人數訂餐（婚攝1+新秘1or2）", ko: "인원 확인 후 주문 (촬영감독 1 + 메이크업 쌤 1~2)" },
+      { zh: "最好11點送到彭園", ko: "11시까지 예식장 도착이 가장 좋음" }
+    ]},
+  { time: "10:30", activity: { zh: "新郎新娘拍宴會廳空照", ko: "신랑·신부 연회장 단독 사진 촬영" },
+    items: [],
+    people: ["婚攝", "Linda", "新郎", "新娘"],
+    content: [{ zh: "要有新娘個人照", ko: "신부 단독 사진 필수" }]},
+  { time: "10:30", activity: { zh: "新娘家人出發", ko: "신부 가족 출발" },
+    items: [{ zh: "開車前往", ko: "차로 이동" }],
+    people: ["哥", "爸", "媽"],
+    content: []},
+  { time: "10:30", activity: { zh: "韓文司儀&朋友抵達彭園", ko: "한국어 사회자 & 친구들 예식장 도착" },
+    items: [],
+    people: ["萊爾", "偷筆"],
+    content: [{ zh: "與婚企Linda打招呼", ko: "웨딩 플래너 Linda와 인사" }]},
+  { time: "10:45", activity: { zh: "新郎&新娘家人抵達彭園", ko: "신랑 & 신부 가족 예식장 도착" },
+    items: [{ zh: "韓國家人禮物", ko: "한국 가족 선물" }],
+    people: ["哥", "新郎", "新娘", "Linda", "萊爾"],
+    content: [
+      { zh: "總招待－哥 與婚企Linda打招呼", ko: "현장 총괄 - 오빠가 웨딩 플래너 Linda와 인사" },
+      { zh: "新郎引導韓國家人到新娘休息室", ko: "신랑이 한국 가족을 신부 대기실로 안내" },
+      { zh: "雙方家人打招呼", ko: "양가 가족 인사" },
+      { zh: "介紹雙方家人與司儀（萊爾&Linda）", ko: "양가 가족과 사회자 소개 (라일 & Linda)" },
+      { zh: "5. 給韓國家人禮物", ko: "5. 한국 가족에게 선물 전달" }
+    ]},
+  { time: "10:50", activity: { zh: "收禮台準備", ko: "축의금 접수대 준비" },
+    items: [
+      { zh: "禮金簿", ko: "축의금 장부" },
+      { zh: "簽到簿（待設計）", ko: "방명록 (디자인 예정)" },
+      { zh: "計算機", ko: "계산기" },
+      { zh: "禮金收納袋", ko: "축의금 보관 봉투" },
+      { zh: "禮金分鈔機", ko: "지폐 분류기" },
+      { zh: "收禮接待處A4", ko: "축의금 접수처 A4 안내지" },
+      { zh: "開席告示A4", ko: "개식 안내 A4" },
+      { zh: "姓名查詢座位iPad（未定）", ko: "이름으로 좌석 조회 iPad (미정)" }
+    ],
+    people: ["雯", "妞"],
+    content: [{ zh: "結束可到新娘休息室休息", ko: "끝난 후 신부 대기실에서 휴식" }]},
+  { time: "10:50", activity: { zh: "喜餅分裝", ko: "답례품 분배 포장" },
+    items: [
+      { zh: "中西喜餅各60盒", ko: "중식·양식 답례품 각 60박스" },
+      { zh: "剪刀", ko: "가위" },
+      { zh: "刀片", ko: "칼날" }
+    ],
+    people: ["菲", "熊", "蕭"],
+    content: [{ zh: "結束可到新娘休息室休息", ko: "끝난 후 신부 대기실에서 휴식" }]},
+  { time: "10:50", activity: { zh: "相片桌布置", ko: “포토 테이블 꾸미기" },
+    items: [
+      { zh: "相框", ko: "액자" },
+      { zh: "鏡", ko: "거울" },
+      { zh: "立牌", ko: “아크릴등신대" },
+      { zh: "狗狗合照區", ko: "강아지 포토존" }
+    ],
+    people: ["偷筆"],
+    content: [{ zh: "依美感擺放", ko: "심미적으로 배치" }]},
+  { time: "10:50", activity: { zh: "韓國朋友禮物分裝", ko: "한국 친구 선물 포장" },
+    items: [{ zh: "未定（餐具/葛瑪蘭/茶包/牛軋餅/地瓜酥/茶布朗尼）", ko: "미정 (식기/카발란/티백/누가크래커/고구마 과자/차 브라우니)" }],
+    people: ["偷筆"],
+    content: [{ zh: "報到簽名時發放", ko: "방명록 사인 시 드림" }]},
+  { time: "10:50", activity: { zh: "位上禮&位上酒水分發", ko: "자리 답례품 & 음료 분배" },
+    items: [
+      { zh: "酒", ko: "술" },
+      { zh: "棉花糖", ko: "마시멜로" }
+    ],
+    people: ["Linda"],
+    content: [{ zh: "自備酒類僅限韓國桌（主桌+2桌）", ko: "준비한 주류는 한국 테이블 한정 (메인 테이블 + 2테이블)" }]},
+  { time: "10:55", activity: { zh: "雙方親友合照", ko: "양가 가족.친구 단체사진" },
+    items: [{ zh: "椅子*4", ko: "의자 4개" }],
+    people: ["Linda", "婚攝", "新郎", "新娘"],
+    content: [
+      { zh: "需要在宴會廳以送客背板為背景拍全家福", ko: "연회장 포토존에서 가족사진 촬영 필요" },
+      { zh: "要請攝影師拍的照片：", ko: "촬영감독에게 부탁할 사진:" },
+      { zh: "新人+男方親友（爸.妹.妹婿.姪子）", ko: "부부 + 신랑 측 가족 (아빠·여동생·매제·조카)" },
+      { zh: "新人+女方親友（爸.媽.哥.弟）", ko: "부부 + 신부 측 가족 (아빠·엄마·오빠·동생)" },
+      { zh: "雙方家人合照", ko: "양가 가족 단체 사진" }
+    ]},
+  { time: "11:00", activity: { zh: "測試燈光・影片・音樂・現場軟硬體檢查", ko: "조명·영상·음악·현장 하드/소프트웨어 점검" },
+    items: [
+      { zh: "影片x2", ko: "영상 x2" },
+      { zh: "音樂", ko: "음악" },
+      { zh: "輪播照片", ko: "슬라이드 사진" }
+    ],
+    people: ["Linda", "弟", "婚攝", "彭園音控.燈控"],
+    content: [
+      { zh: "檢查直立電視上的座位圖姓名・文字", ko: "세로형 TV의 좌석도 이름·문구 확인" },
+      { zh: "確認迎賓照片正常輪播、影片與音樂有聲音", ko: "환영 사진 정상 슬라이드 재생, 영상·음악 사운드 확인" },
+      { zh: "確認每桌有wifi帳密小卡/位上禮/韓國桌有酒水", ko: "각 테이블에 wifi 안내카드·답례품 비치, 한국 테이블 주류 비치 확인" }
+    ]},
+  { time: "11:00", activity: { zh: "領取工作人員餐點", ko: "스태프 식사 수령" },
+    items: [],
+    people: ["弟"],
+    content: []},
+  { time: "11:10", activity: { zh: "彩排", ko: "리허설" },
+    items: [],
+    people: ["Linda", "萊爾", "新郎", "新娘", "爸", "媽"],
+    content: [
+      { zh: "引導女方爸媽準備彩排", ko: "신부 측 부모님 리허설 준비 안내" },
+      { zh: "指引韓國家人先入座或可到3樓大創、1樓逛超市", ko: "한국 가족.친구 먼저 착석 안내, 또는 3층 다이소·1층 슈퍼 둘러보기 가능" },
+      { zh: "司儀翻譯", ko: "사회자 통역" }
+    ]},
+  { time: "11:25", activity: { zh: "把狗推到狗狗拍照區", ko: "강아지를 강아지 포토존으로 이동" },
+    items: [
+      { zh: "推車", ko: "유모차" },
+      { zh: "尿布", ko: "기저귀" },
+      { zh: "背景音樂－迎賓", ko: "배경음악 - 환영" }
+    ],
+    people: ["菲"],
+    content: [{ zh: "協助陪拍,11:50推到主桌後入席", ko: "사진 촬영 보조,11:50 메인테이블로 옮김" }]},
+  { time: "11:30", activity: { zh: "引導簽到+座位指引", ko: "방명록 안내 + 좌석 안내" },
+    items: [{ zh: "各桌賓客姓名總表", ko: "테이블별 하객 이름 리스트" }],
+    people: ["蕭", "偷筆", "爸", "媽", "哥", "弟"],
+    content: [
+      { zh: "台灣 約11桌", ko: "대만 약 11테이블" },
+      { zh: "韓國 約2桌", ko: "한국 약 2테이블" }
+    ]},
+  { time: "11:30", activity: { zh: "發餅／發禮物", ko: "답례품 / 선물 배포" },
+    items: [
+      { zh: "喜餅", ko: "답례품" },
+      { zh: "禮物", ko: "선물" }
+    ],
+    people: ["蕭", "熊", "偷筆"],
+    content: [{ zh: "韓國朋友只給禮物", ko: "한국 친구에게는 선물만 전달" }]},
+  { time: "11:30", activity: { zh: "收禮金", ko: "축의금 접수" },
+    items: [{ zh: "「收禮接待處」A4列印+韓文", ko: "「축의금 접수처」 A4 인쇄 + 한국어" }],
+    people: ["雯", "妞"],
+    content: [
+      { zh: "收禮時不同面額的鈔票分開放", ko: "받을 때 액수별로 지폐 분리 보관" },
+      { zh: "*12點開席前到3樓櫃台寄放禮金，開單據留存", ko: "*12시 개식 전 3층 카운터에 축의금 보관, 영수증 발급 받아 보관" }
+    ]},
+  { time: "11:40", activity: { zh: "確認餐點與桌數", ko: "식사 메뉴와 테이블 수 확인" },
+    items: [],
+    people: ["哥"],
+    content: [{ zh: "確認素套餐位置、實際開席桌數，若開席桌數未達保證桌數15桌，告知要把桌菜打包外帶，或選擇寄桌", ko: "비건 세트 위치·실제 개석 테이블 수 확인. 보장 테이블 수 15테이블 미달 시 음식 포장 또는 위탁 보관 안내" }]},
+  { time: "11:45", activity: { zh: "引導韓國家人入座", ko: "한국 가족 착석 안내" },
+    items: [],
+    people: ["新郎", "萊爾"],
+    content: [
+      { zh: "主桌：", ko: "메인 테이블:" },
+      { zh: "新娘.爸爸.媽媽.哥.弟", ko: "신부·아빠·엄마·오빠·동생" },
+      { zh: "新郎.爸爸.大姑姑.妹妹.妹婿", ko: "신랑·아빠·큰고모·여동생·매제" }
+    ]},
+  { time: "11:45", activity: { zh: "上前菜", ko: "에피타이저" },
+    items: [{ zh: "菜單卡－韓文翻譯（似顏繪）", ko: "메뉴카드 - 한국어 번역 (캐리커처)" }],
+    people: ["Linda"],
+    content: [{ zh: "炸湯圓只要紅白", ko: "탕위안은 홍·백만 만 제공" }]},
+  { time: "11:50", activity: { zh: "寄放禮金", ko: "축의금 보관" },
+    items: [],
+    people: ["妞"],
+    content: [{ zh: "到3樓櫃台寄放，點收開單據（分面額整理）", ko: "3층 카운터에 보관, 점검 후 영수증 발급 (액수별 정리)" }]},
+  { time: "11:55", activity: { zh: "「收禮接待處」改成放開席告示，引導晚到賓客", ko: "「축의금 접수처」를 「개식 안내문」으로 변경, 늦게 도착한 하객 안내" },
+    items: [{ zh: "「開席告示」A4列印+韓文", ko: "「개식 안내」 A4 인쇄 + 한국어" }],
+    people: ["雯"],
+    content: [{ zh: "告示上引導簽到+到指定桌給禮金（提供伊雯聯繫方式－若方便）", ko: "안내문에 방명록 작성 + 지정 테이블에서 축의금 전달 안내 (이문 연락처 제공)" }]},
+  { time: "12:00", activity: { zh: "準時開席", ko: "정시 개식" },
+    items: [], people: [], content: []},
+  { time: "12:05", activity: { zh: "開場說明+新人介紹影片", ko: "개회 설명 + 신혼부부 소개 영상" },
+    items: [{ zh: "影片（5分鐘內）", ko: "영상 (5분 이내)" }],
+    people: [], content: []},
+  { time: "12:05", activity: { zh: "第一次進場", ko: "첫 번째 입장" },
+    items: [
+      { zh: "捧花", ko: "부케" },
+      { zh: "背景音樂01", ko: "배경음악 01" },
+      { zh: "背景音樂02", ko: "배경음악 02" },
+      { zh: "背景音樂03", ko: "배경음악 03" }
+    ],
+    people: ["Linda", "萊爾"],
+    content: [
+      { zh: "新郎單獨進場至走道中央", ko: "신랑 혼자 통로 중앙까지 입장" },
+      { zh: "新娘爸爸媽媽牽新娘進場", ko: "신부 부모님이 신부의 손을 잡고 입장" },
+      { zh: "走道中央擁抱、交手", ko: "통로 중앙에서 포옹·손 인계" },
+      { zh: "新郎與爸媽換位置", ko: "신랑과 부모님 위치 교환" },
+      { zh: "新郎新娘向爸媽鞠躬", ko: "신랑·신부 부모님께 인사" },
+      { zh: "爸媽先入座", ko: "부모님 먼저 착석" },
+      { zh: "新郎新娘行進上台", ko: "신랑·신부 무대로 행진" }
+    ]},
+  { time: "12:05", activity: { zh: "互念中文韓文誓詞", ko: "중·한 결혼 서약 낭독" },
+    items: [
+      { zh: "背景音樂04", ko: "배경음악 04" },
+      { zh: "誓詞本", ko: "서약문" },
+      { zh: "PPT中韓內容翻譯", ko: "PPT 중·한 내용 번역" }
+    ],
+    people: ["萊爾"],
+    content: [{ zh: "幫忙切換PPT", ko: "PPT 전환 도와주기" }]},
+  { time: "12:05", activity: { zh: "交換戒指・親吻", ko: "반지 교환 · 키스" },
+    items: [
+      { zh: "背景音樂05", ko: "배경음악 05" },
+      { zh: "戒指盒", ko: "반지 케이스" }
+    ],
+    people: ["小幫手"],
+    content: []},
+  { time: "12:05", activity: { zh: "邀請雙方主婚人到台上", ko: "양가 주혼인 무대 위로 초청" },
+    items: [{ zh: "背景音樂06", ko: "배경음악 06" }],
+    people: ["Linda", "萊爾"],
+    content: []},
+  { time: "12:05", activity: { zh: "新娘爸爸致詞", ko: "신부 아빠 축사" },
+    items: [{ zh: "背景音樂07", ko: "배경음악 07" }],
+    people: ["爸"],
+    content: [{ zh: "爸爸自由發揮，無需翻譯", ko: "아빠 자유 진행, 통역 불필요" }]},
+  { time: "12:05", activity: { zh: "新人跟家人擁抱", ko: "부부가 가족과 포옹" },
+    items: [{ zh: "背景音樂07", ko: "배경음악 07" }],
+    people: ["Linda", "萊爾"],
+    content: [
+      { zh: "新娘抱新娘爸媽", ko: "신부가 신부 부모님 안기" },
+      { zh: "新郎抱新郎爸爸&姑姑", ko: "신랑이 신랑 아빠 & 고모 안기" }
+    ]},
+  { time: "12:30", activity: { zh: "跟賓客舉杯，下台入席+上菜", ko: "하객들과 건배, 무대에서 내려와 착석 + 식사 시작" },
+    items: [{ zh: "背景音樂08", ko: "배경음악 08" }],
+    people: [], content: []},
+  { time: "12:30", activity: { zh: "親友照片輪播", ko: "가족.친구 사진 슬라이드쇼" },
+    items: [
+      { zh: "背景音樂－用餐", ko: "배경음악 - 식사" },
+      { zh: "輪播照片", ko: "슬라이드 사진" }
+    ],
+    people: [], content: []},
+  { time: "12:30", activity: { zh: "逐桌發放停車優惠券（4小時）", ko: "테이블별 주차 할인권(4시간) 배포" },
+    items: [],
+    people: ["小幫手"],
+    content: []},
+  { time: "12:40", activity: { zh: "新娘換裝，新郎短暫休息", ko: "신부 드레스 갈아입기, 신랑 잠시 휴식" },
+    items: [],
+    people: ["新秘"],
+    content: []},
+  { time: "13:00", activity: { zh: "成長+新人交往影片", ko: "성장 + 연애 영상" },
+    items: [{ zh: "影片（5分鐘內）", ko: "영상 (5분 이내)" }],
+    people: [], content: []},
+  { time: "13:00", activity: { zh: "邀請賓客帶著杯子到走道兩側", ko: "하객들 잔을 들고 통로 양쪽으로 이동 안내" },
+    items: [{ zh: "背景音樂09", ko: "배경음악 09" }],
+    people: ["Linda", "萊爾", "偷筆", "雯"],
+    content: [
+      { zh: "台上司儀韓文說明（萊爾）", ko: "무대 위 사회자 한국어 설명 (라일)" },
+      { zh: "台下引導親友起身（偷筆.雯）", ko: "무대 아래에서 가족.친구 안내 (토비·이문)" }
+    ]},
+  { time: "13:00", activity: { zh: "第二次進場－敲敲杯", ko: "두 번째 입장 - 잔 부딪히기" },
+    items: [
+      { zh: "高腳杯（Linda）", ko: "와인잔 (Linda)" },
+      { zh: "背景音樂10", ko: "배경음악 10" }
+    ],
+    people: ["Linda", "萊爾", "婚攝"],
+    content: [{ zh: "緩慢進場讓攝影師捕捉畫面", ko: "천천히 입장하여 촬영감독이 화면을 담을 수 있도록" }]},
+  { time: "13:00", activity: { zh: "抽捧花活動－新娘", ko: "부케 추첨 행사 - 신부" },
+    items: [
+      { zh: "分束捧花", ko: "분할 부케" },
+      { zh: "捧花牛皮提袋", ko: "부케 종이 가방" },
+      { zh: "背景音樂11", ko: "배경음악 11" }
+    ],
+    people: ["Linda", "萊爾", "小幫手"],
+    content: [
+      { zh: "－ 捧花事先分束", ko: "－ 부케 사전 분할" },
+      { zh: "－ 主持人說明捧花象徵意義、特殊捧花意義", ko: "－ 사회자가 부케의 상징적·특별한 의미 설명" },
+      { zh: "－ 大合照", ko: "－ 단체사진" },
+      { zh: "－ 小幫手舞台邊提供牛皮提袋", ko: "－ 도우미가 무대 옆에서 종이 가방 제공" }
+    ]},
+  { time: "13:00", activity: { zh: "抽捧花活動－新郎", ko: "부케 추첨 행사 - 신랑" },
+    items: [
+      { zh: "酒瓶抽花椰菜娃娃*1", ko: "술병에서 브로콜리 인형 뽑기 *1" },
+      { zh: "背景音樂12", ko: "배경음악 12" },
+      { zh: "18天", ko: "18일" },
+      { zh: "韓國燒酒", ko: "한국 소주" },
+      { zh: "台灣啤酒", ko: "대만 맥주" },
+      { zh: "金門高粱", ko: "금문 고량주" },
+      { zh: "玉山高粱", ko: "옥산 고량주" },
+      { zh: "小罐葛瑪蘭威士忌", ko: "작은 카발란 위스키" },
+      { zh: "或是台灣代表性小東西小食物", ko: "혹은 대만 대표 소품·간식" }
+    ],
+    people: ["Linda", "萊爾", "偷筆", "雯", "小幫手"],
+    content: [
+      { zh: "－ 主持人說明讓韓國朋友也體驗", ko: "－ 사회자가 한국 친구들도 체험하도록 설명" },
+      { zh: "－ 引導韓國朋友上台（台下協助鼓勵）", ko: "－ 한국 친구들 무대로 안내 (무대 아래에서 격려)" },
+      { zh: "－ 大合照", ko: "－ 단체사진" },
+      { zh: "－ 小幫手拿娃娃給新郎", ko: "－ 도우미가 인형을 신랑에게 전달" }
+    ]},
+  { time: "13:30", activity: { zh: "逐桌敬酒", ko: "테이블별 인사·건배" },
+    items: [{ zh: "每位朋友照片小卡", ko: "친구별 사진 카드" }],
+    people: ["主桌小姐", "小幫手", "婚攝"],
+    content: [
+      { zh: "引導雙方主婚人一起敬酒", ko: "양가 주혼인 함께 인사·건배 안내" },
+      { zh: "小幫手先到下一桌發放照片卡", ko: "도우미가 먼저 다음 테이블에 사진 카드 배포" }
+    ]},
+  { time: "13:40", activity: { zh: "自由聊天拍照時間", ko: "자유 대화 및 사진 촬영 시간" },
+    items: [],
+    people: [],
+    content: [
+      { zh: "分開與各自朋友聊天", ko: "각자 친구들과 따로 대화" },
+      { zh: "新郎請不要喝醉", ko: "신랑 취하지 말 것" }
+    ]},
+  { time: "14:00", activity: { zh: "現場補妝", ko: "현장 화장 수정" },
+    items: [],
+    people: ["新秘"],
+    content: [{ zh: "不回休息室，請老師至現場補妝", ko: "대기실에 가지 않고, 메이크업 쌤께 현장에서 수정 부탁" }]},
+  { time: "14:00", activity: { zh: "上冰淇淋", ko: "아이스크림 제공" },
+    items: [], people: [], content: []},
+  { time: "14:10", activity: { zh: "詢問韓國朋友是否需協助叫車", ko: "한국 친구 택시 필요 여부 확인" },
+    items: [],
+    people: ["萊爾", "偷筆", "雯"],
+    content: [{ zh: "若需要→韓國朋友收好東西前往拍照時，用APP叫車→跟新人請款", ko: "필요 시 → 한국 친구가 짐 정리 후 사진 촬영장 이동 시 앱으로 택시 호출 → 신부에게 비용 청구" }]},
+  { time: "14:15", activity: { zh: "引導韓國親友先拍照", ko: "한국 가족.친구 먼저 사진 촬영 안내" },
+    items: [
+      { zh: "背景音樂－送客", ko: "배경음악" },
+      { zh: "輪播照片", ko: "슬라이드 사진" }
+    ],
+    people: ["Linda", "萊爾", "偷筆", "雯"],
+    content: [
+      { zh: "主持人告知韓國賓客因飛機時間考量，優先讓韓國人拍照", ko: "사회자가 한국 하객에게 비행기 시간 고려해 한국인 우선 촬영 안내" },
+      { zh: "引導韓國人至後方背板區拍照", ko: "한국인을 뒤쪽 배경판 구역으로 안내해 촬영" }
+    ]},
+  { time: "14:20", activity: { zh: "送客拍照", ko: "환송 사진 촬영" },
+    items: [],
+    people: ["Linda", "婚攝"],
+    content: []},
+  { time: "14:50", activity: { zh: "送客結束", ko: "환송 종료" },
+    items: [],
+    people: ["萊爾", "偷筆", "Linda", "小幫手"],
+    content: [
+      { zh: "朋友紅包禮物", ko: "친구 답례 선물 (홍빠오)" },
+      { zh: "－ 萊爾.偷筆", ko: "－ 라일·토비" },
+      { zh: "－ Linda.小幫手", ko: "－ Linda·도우미" }
+    ]},
+  { time: "15:30", activity: { zh: "結帳", ko: "정산" },
+    items: [],
+    people: ["哥"],
+    content: [{ zh: "到3樓結尾款+換回新娘證件（新娘休息室鑰匙）", ko: "3층에서 잔금 정산 + 신부 신분증 회수 (신부 대기실 열쇠 반납)" }]},
+  { time: "16:00", activity: { zh: "還禮服", ko: "예복 반납" },
+    items: [{ zh: "輕便衣服鞋子", ko: "편한 옷·신발" }],
+    people: [], content: []}
+];
+
+// ============ 渲染邏輯 ============
+const eventsContainer = document.getElementById("eventsContainer");
+const koToggle = document.getElementById("koToggle");
+const statsEl = document.getElementById("stats");
+const backTop = document.getElementById("backTop");
+
+const multiSelect = document.getElementById("multiSelect");
+const msTrigger = document.getElementById("msTrigger");
+const msDropdown = document.getElementById("msDropdown");
+
+// 已選人員 set
+const selectedPeople = new Set();
+
+// 取得所有出現過的人員（依 PEOPLE 對照表的順序）
+function getAllPeople() {
+  const seen = new Set();
+  EVENTS.forEach(e => e.people.forEach(p => seen.add(p)));
+  return Object.keys(PEOPLE).filter(p => seen.has(p));
+}
+
+// 建立多選下拉選項
+function buildDropdown() {
+  const allPeople = getAllPeople();
+  msDropdown.innerHTML = allPeople.map(p => {
+    const ko = PEOPLE[p] || "";
+    return `<label class="ms-option">
+      <input type="checkbox" value="${escapeHtml(p)}">
+      <span>${escapeHtml(p)}<span class="ko-tag"> ／ ${escapeHtml(ko)}</span></span>
+    </label>`;
+  }).join("");
+
+  msDropdown.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener("change", e => {
+      const v = e.target.value;
+      if (e.target.checked) selectedPeople.add(v);
+      else selectedPeople.delete(v);
+      updateTrigger();
+      render();
+    });
+  });
+}
+
+// 更新 trigger 顯示（已選人員的 chip）
+function updateTrigger() {
+  if (selectedPeople.size === 0) {
+    msTrigger.innerHTML = `<span class="ms-placeholder">全部顯示<span class="ko">／전체 표시</span></span>`;
+    return;
+  }
+  const chips = Array.from(selectedPeople).map(p => {
+    const ko = PEOPLE[p] || "";
+    return `<span class="ms-chip" data-person="${escapeHtml(p)}">${escapeHtml(p)}<span class="ko"> ${escapeHtml(ko)}</span><span class="ms-chip-x" data-remove="${escapeHtml(p)}">×</span></span>`;
+  }).join("");
+  msTrigger.innerHTML = chips + `<span class="ms-clear" id="msClear">清除<span class="ko">／초기화</span></span>`;
+
+  // chip x 按鈕
+  msTrigger.querySelectorAll('.ms-chip-x').forEach(x => {
+    x.addEventListener("click", e => {
+      e.stopPropagation();
+      const p = x.dataset.remove;
+      selectedPeople.delete(p);
+      // 同步 dropdown checkbox
+      const cb = msDropdown.querySelector(`input[value="${CSS.escape(p)}"]`);
+      if (cb) cb.checked = false;
+      updateTrigger();
+      render();
+    });
+  });
+  // 清除全部
+  const clearBtn = document.getElementById("msClear");
+  if (clearBtn) {
+    clearBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      selectedPeople.clear();
+      msDropdown.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      updateTrigger();
+      render();
+    });
+  }
+}
+
+// 開關下拉
+msTrigger.addEventListener("click", e => {
+  // 點到 chip 內部時不要觸發開合
+  if (e.target.closest(".ms-chip-x") || e.target.closest(".ms-clear")) return;
+  multiSelect.classList.toggle("open");
+});
+document.addEventListener("click", e => {
+  if (!multiSelect.contains(e.target)) {
+    multiSelect.classList.remove("open");
+  }
+});
+
+// 渲染人員 tag
+function renderPerson(p, isHighlight) {
+  const ko = PEOPLE[p] || "";
+  return `<span class="person-tag${isHighlight ? " highlight" : ""}">${escapeHtml(p)}<span class="ko"> ${escapeHtml(ko)}</span></span>`;
+}
+function renderItem(item) {
+  return `<span class="item-tag">${escapeHtml(item.zh)}<span class="ko"> ／ ${escapeHtml(item.ko)}</span></span>`;
+}
+function renderContent(c) {
+  return `<div class="content-item">${escapeHtml(c.zh)}<span class="ko-block">${escapeHtml(c.ko)}</span></div>`;
+}
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+
+// 時間格式：時間範圍時拆兩行顯示
+function renderTimeCell(time) {
+  if (time.includes("-")) {
+    const [a, b] = time.split("-");
+    return `<span class="time-range">${escapeHtml(a)}<br>｜<br>${escapeHtml(b)}</span>`;
+  }
+  return escapeHtml(time);
+}
+
+// 渲染所有事件
+function render() {
+  const filtered = selectedPeople.size === 0
+    ? EVENTS
+    : EVENTS.filter(e => e.people.some(p => selectedPeople.has(p)));
+
+  if (filtered.length === 0) {
+    eventsContainer.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">📭</div>
+        <div>所選人員在這份流程表中沒有負責項目</div>
+      </div>`;
+    statsEl.textContent = "";
+    return;
+  }
+
+  if (selectedPeople.size === 0) {
+    statsEl.innerHTML = `共 ${filtered.length} 個流程項目<span class="ko">／총 ${filtered.length}개 항목</span>`;
+  } else {
+    const names = Array.from(selectedPeople).join("、");
+    statsEl.innerHTML = `已選：${escapeHtml(names)}　共 ${filtered.length} 項任務<span class="ko">／총 ${filtered.length}개</span>`;
+  }
+
+  const html = filtered.map(e => {
+    const isFiltering = selectedPeople.size > 0;
+    const peopleHtml = e.people.length > 0
+      ? `<div class="field"><span class="field-label">負責人員<span class="ko">／담당자</span></span><div class="tags">${e.people.map(p => renderPerson(p, isFiltering && selectedPeople.has(p))).join("")}</div></div>`
+      : "";
+    const itemsHtml = e.items.length > 0
+      ? `<div class="field"><span class="field-label">需要道具<span class="ko">／필요 도구</span></span><div class="tags">${e.items.map(renderItem).join("")}</div></div>`
+      : "";
+    const contentHtml = e.content.length > 0
+      ? `<div class="field"><span class="field-label">內容<span class="ko">／내용</span></span><div class="content-list">${e.content.map(renderContent).join("")}</div></div>`
+      : "";
+    return `
+      <div class="event-row">
+        <div class="event-time-col">${renderTimeCell(e.time)}</div>
+        <div class="event-card${isFiltering ? " highlighted" : ""}">
+          <div class="event-activity">${escapeHtml(e.activity.zh)}<span class="ko-block">${escapeHtml(e.activity.ko)}</span></div>
+          ${peopleHtml}
+          ${itemsHtml}
+          ${contentHtml}
+        </div>
+      </div>`;
+  }).join("");
+
+  eventsContainer.innerHTML = html;
+}
+
+// 初始化
+buildDropdown();
+updateTrigger();
+render();
+
+// 韓文切換
+koToggle.addEventListener("change", () => {
+  document.body.classList.toggle("show-ko", koToggle.checked);
+});
+
+// 回頂端
+window.addEventListener("scroll", () => {
+  backTop.classList.toggle("visible", window.scrollY > 300);
+});
+backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+</script>
+</body>
+</html>
+
+
