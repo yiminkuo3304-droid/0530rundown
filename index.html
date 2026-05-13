@@ -671,12 +671,12 @@ const EVENTS = [
       { zh: "新人+女方親戚（爸.媽.哥.弟）", ko: "부부 + 신부 측 가족 (아빠·엄마·오빠·동생)" },
       { zh: "雙方家人合照", ko: "양가 가족 단체 사진" }, // 已補上逗號
 { 
-        zh: "[參考照片1](https://storage.ghost.io/c/be/89/be89015b-f903-469b-a269-4a939a617a37/content/images/2024/08/054_LJH_1997.jpg)", 
-        ko: "[참고 사진1](https://storage.ghost.io/c/be/89/be89015b-f903-469b-a269-4a939a617a37/content/images/2024/08/054_LJH_1997.jpg)" 
+        zh: '<a href="https://storage.ghost.io/c/be/89/be89015b-f903-469b-a269-4a939a617a37/content/images/2024/08/054_LJH_1997.jpg" target="_blank" style="color: #6b4d9a; text-decoration: underline;">參考照片1</a>', 
+        ko: '<a href="https://storage.ghost.io/c/be/89/be89015b-f903-469b-a269-4a939a617a37/content/images/2024/08/054_LJH_1997.jpg" target="_blank" style="color: #6b4d9a; text-decoration: underline;">참고 사진1</a>' 
       },
       { 
-        zh: "[參考照片2](https://cdn.imweb.me/upload/S20200128c816f6f922224/02d7094a01e5f.jpg)", 
-        ko: "[참고 사진2](https://cdn.imweb.me/upload/S20200128c816f6f922224/02d7094a01e5f.jpg)" 
+        zh: '<a href="https://cdn.imweb.me/upload/S20200128c816f6f922224/02d7094a01e5f.jpg" target="_blank" style="color: #6b4d9a; text-decoration: underline;">參考照片2</a>', 
+        ko: '<a href="https://cdn.imweb.me/upload/S20200128c816f6f922224/02d7094a01e5f.jpg" target="_blank" style="color: #6b4d9a; text-decoration: underline;">참고 사진2</a>' 
       }
     ]
   },
@@ -1041,7 +1041,8 @@ function renderItem(item) {
   return `<span class="item-tag">${escapeHtml(item.zh)}<span class="ko"> ／ ${escapeHtml(item.ko)}</span></span>`;
 }
 function renderContent(c) {
-  return `<div class="content-item">${escapeHtml(c.zh)}<span class="ko-block">${escapeHtml(c.ko)}</span></div>`;
+  // 移除 escapeHtml，這樣才能顯示超連結標籤
+  return `<div class="content-item">${c.zh}<span class="ko-block">${c.ko}</span></div>`;
 }
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({
