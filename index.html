@@ -419,7 +419,7 @@ const EVENTS = [
       { zh: "氣球", ko: "풍선" },
       { zh: "門上貼紙", ko: "문 스티커" },
       { zh: "陽台地墊", ko: "빨간 매트" },
-      { zh: "方桌桌巾", ko: "테이블 커버" },
+      { zh: "方桌桌巾", ko: "테이블 커버" }
     ],
     people: ["哥", "弟", "爸"],
     content: [{ zh: "長桌、狗籠移開，擺椅子與裝飾", ko: "테이블·강아지 케이지 치우고, 의자 배치" }]},
@@ -607,7 +607,7 @@ const EVENTS = [
     people: ["萊爾", "立萱"],
     content: [
       { zh: "與婚企Linda打招呼", ko: "웨딩 플래너 Linda와 인사" },
-      { zh: "4樓宴會廳外7號休息室，若新人拍照中，可直接到宴會廳", ko: "4층 7번 휴개실, 신랑 신부 촬영중이면 바로 연회장으로" },
+      { zh: "4樓宴會廳外7號休息室，若新人拍照中，可直接到宴會廳", ko: "4층 7번 휴개실, 신랑 신부 촬영중이면 바로 연회장으로" }
     ]},
   { time: "10:30", activity: { zh: "新娘家人出發", ko: "신부 가족 출발" },
     items: [{ zh: "家中喜餅/韓國家人禮物", ko: "답례품, 한국 가족 선물" }],
@@ -661,8 +661,8 @@ const EVENTS = [
     items: [{ zh: "噶瑪蘭威士忌+一口烏魚子/牛軋餅）", ko: "미정 (식기/카발란/티백/누가크래커/고구마 과자/차 브라우니/미니 오란)" }],
     people: ["立萱"],
     content: [
-     { zh: "簽名時發放", ko: "방명록 사인 시 드림" }, // 補上這個逗號
-     { zh: "結束可到新娘休息室休息或協助彩排", ko: "끝난 후 신부 대기실에서 휴식 혹은 리허설 참여" },
+     { zh: "簽名時發放", ko: "방명록 사인 시 드림" },
+     { zh: "結束可到新娘休息室休息或協助彩排", ko: "끝난 후 신부 대기실에서 휴식 혹은 리허설 참여" }
     ]},
   { time: "10:50-11:10", activity: { zh: "位上禮&位上酒水分發", ko: "자리 답례품 & 음료 분배" },
     items: [
@@ -681,7 +681,7 @@ const EVENTS = [
       { zh: "要請攝影師拍的照片：", ko: "촬영감독에게 부탁할 사진:" },
       { zh: "新人+男方親戚（爸.妹.妹婿.姪子）", ko: "부부 + 신랑 측 가족 (아빠·여동생·매제·조카)" },
       { zh: "新人+女方親戚（爸.媽.哥.弟）", ko: "부부 + 신부 측 가족 (아빠·엄마·오빠·동생)" },
-      { zh: "雙方家人合照", ko: "양가 가족 단체 사진" }, // 已補上逗號
+      { zh: "雙方家人合照", ko: "양가 가족 단체 사진" },
 { 
         zh: '<a href="https://storage.ghost.io/c/be/89/be89015b-f903-469b-a269-4a939a617a37/content/images/2024/08/054_LJH_1997.jpg" target="_blank" style="color: #6b4d9a; text-decoration: underline;">參考照片1</a>', 
         ko: '<a href="https://storage.ghost.io/c/be/89/be89015b-f903-469b-a269-4a939a617a37/content/images/2024/08/054_LJH_1997.jpg" target="_blank" style="color: #6b4d9a; text-decoration: underline;">참고 사진1</a>' 
@@ -944,7 +944,7 @@ const EVENTS = [
     items: [],
     people: ["萊爾", "立萱", "Linda"],
     content: [
-      { zh: "感謝朋友與主持人/小幫手", ko: "친구/사회자 감사" },
+      { zh: "感謝朋友與主持人/小幫手", ko: "친구/사회자 감사" }
     ]},
   { time: "15:00", activity: { zh: "結帳", ko: "정산" },
     items: [],
@@ -1056,8 +1056,9 @@ function renderItem(item) {
   return `<span class="item-tag">${escapeHtml(item.zh)}<span class="ko"> ／ ${escapeHtml(item.ko)}</span></span>`;
 }
 function renderContent(c) {
-  // 移除 escapeHtml，這樣才能顯示超連結標籤
-  return `<div class="content-item">${c.zh}<span class="ko-block">${c.ko}</span></div>`;
+  // 直接插入 HTML，這樣才能顯示超連結標籤
+  const koHtml = (c.ko != null && c.ko !== "") ? `<span class="ko-block">${c.ko}</span>` : "";
+  return `<div class="content-item">${c.zh}${koHtml}</div>`;
 }
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({
@@ -1141,5 +1142,3 @@ backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smo
 </script>
 </body>
 </html>
-
-
